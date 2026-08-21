@@ -4,14 +4,17 @@ import ResumeSidebar from './sections/ResumeSidebar'
 import ProjectItem from './sections/ProjectItem'
 import EducationSection from './sections/EducationSection'
 import GallerySection from './sections/GallerySection'
+import GitHubActivitySection from './sections/GitHubActivitySection'
 import ContactSection from './sections/ContactSection'
 import Footer from './components/Footer'
 import Reveal from './components/Reveal'
+import { useGitHubActivity } from './hooks/useGitHubActivity'
 import './App.css'
 
 function App() {
   const featuredProject = projects.find((p) => p.featured)
   const otherProjects = projects.filter((p) => !p.featured)
+  const activity = useGitHubActivity()
 
   return (
     <div className="app">
@@ -129,6 +132,15 @@ function App() {
 
           {/* ── Gallery ── */}
           <GallerySection photos={photos} />
+
+          {/* ── GitHub Activity ── */}
+          <Reveal>
+            <GitHubActivitySection
+              status={activity.status}
+              stats={activity.stats}
+              weeks={activity.weeks}
+            />
+          </Reveal>
 
           {/* ── Contact ── */}
           <Reveal>

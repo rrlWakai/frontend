@@ -170,3 +170,87 @@ export const education: Education = {
   location: 'San Pablo City, Laguna, Philippines',
   status: '3rd Year — Currently Enrolled',
 }
+
+/* ═══════════════════════════════════════
+   GITHUB ACTIVITY — data layer
+   Live data comes from the backend service
+   (GET {VITE_API_URL}/api/github-contributions),
+   which computes counts, levels and streaks.
+   ═══════════════════════════════════════ */
+
+export type ContributionLevel = 0 | 1 | 2 | 3 | 4
+
+export type ContributionDay = {
+  /** ISO date, yyyy-mm-dd */
+  date: string
+  /** Real contribution count */
+  count: number
+  /** Discrete intensity step driving dot size + color */
+  level: ContributionLevel
+}
+
+export type ContributionWeek = {
+  /** Always 7 entries, Sunday → Saturday */
+  days: ContributionDay[]
+}
+
+/** number once live data has loaded, "—" while placeholders are shown */
+export type GitHubStats = {
+  totalContributions: number | string
+  currentStreak: number | string
+  longestStreak: number | string
+}
+
+/** Shown before the backend responds and on error */
+export const githubStatsPlaceholder: GitHubStats = {
+  totalContributions: '—',
+  currentStreak: '—',
+  longestStreak: '—',
+}
+
+/** Payload shape returned by the backend */
+export type GitHubActivityResponse = GitHubStats & {
+  days: ContributionDay[]
+}
+
+/** Chunks the backend's flat day list into Sun–Sat weeks for the grid */
+export function groupDaysIntoWeeks(days: ContributionDay[]): ContributionWeek[] {
+  const weeks: ContributionWeek[] = []
+  for (let i = 0; i < days.length; i += 7) {
+    weeks.push({ days: days.slice(i, i + 7) })
+  }
+  return weeks
+}
+
+/**
+ * Builds a full 53-week (Sun–Sat) calendar ending with the current week,
+ * with every day at level 0 — used as the loading skeleton so the grid
+ * layout (and month/day labels) hold their place while the backend wakes up.
+ */
+export function generateSkeletonActivity(totalWeeks = 53): ContributionWeek[] {
+  const today = new Date()
+  const end = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+  end.setDate(end.getDate() + (6 - end.getDay())) // Saturday of current week
+
+  const totalDays = totalWeeks * 7
+  const start = new Date(end)
+  start.setDate(start.getDate() - (totalDays - 1)) // lands on a Sunday
+
+  const weeks: ContributionWeek[] = []
+  let days: ContributionDay[] = []
+
+  for (let i = 0; i < totalDays; i++) {
+    const d = new Date(start)
+    d.setDate(start.getDate() + i)
+    const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
+      d.getDate(),
+    ).padStart(2, '0')}`
+    days.push({ date: iso, count: 0, level: 0 })
+    if (days.length === 7) {
+      weeks.push({ days })
+      days = []
+    }
+  }
+
+  return weeks
+}

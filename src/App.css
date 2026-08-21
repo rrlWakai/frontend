@@ -1142,6 +1142,227 @@
 }
 
 /* ═══════════════════════════════════════
+   GITHUB ACTIVITY
+   ═══════════════════════════════════════ */
+
+/* ── Stats row ── */
+.gh-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 48px;
+  margin-bottom: 20px;
+}
+
+.gh-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.gh-stat-value {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.gh-stat-label {
+  margin-top: 7px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-subtle);
+}
+
+/* ── Card — matches existing bordered-card treatment; scrolls horizontally when narrow ── */
+.gh-card {
+  border: 1px solid var(--color-rule);
+  border-radius: 4px;
+  padding: 16px 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gh-card::-webkit-scrollbar {
+  display: none;
+}
+
+.gh-graph {
+  --gh-cell: 11px;
+  --gh-gap: 3px;
+  --gh-day-w: 26px;
+  --gh-label-gap: 6px;
+  width: max-content;
+}
+
+/* Month labels along the top */
+.gh-months {
+  display: flex;
+  margin-left: calc(var(--gh-day-w) + var(--gh-label-gap));
+  margin-bottom: 8px;
+}
+
+.gh-month-label {
+  display: block;
+  flex-shrink: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-subtle);
+}
+
+/* Day labels (Sun–Sat) pinned as a sticky left column while the grid scrolls */
+.gh-grid-body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gh-label-gap);
+}
+
+.gh-day-labels {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex-shrink: 0;
+  width: var(--gh-day-w);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gh-gap);
+  background: var(--color-paper);
+}
+
+.gh-day-labels span {
+  height: var(--gh-cell);
+  line-height: var(--gh-cell);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--color-subtle);
+}
+
+/* Grid — 53 columns × 7 rows of fixed cells, filled column-first (Sun top) */
+.gh-grid {
+  display: grid;
+  grid-template-rows: repeat(7, var(--gh-cell));
+  grid-auto-flow: column;
+  grid-auto-columns: var(--gh-cell);
+  gap: var(--gh-gap);
+}
+
+.gh-cell {
+  width: var(--gh-cell);
+  height: var(--gh-cell);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dots — size + color step together per level, site neutrals only.
+   --gh-o is each level's base opacity, reused by the breathing keyframes. */
+.gh-dot {
+  border-radius: 50%;
+  transform-origin: center;
+  animation: gh-dot-breathe 3s ease-in-out infinite;
+}
+
+.gh-level-0 {
+  --gh-o: 0.45;
+}
+
+.gh-level-0 .gh-dot {
+  width: 2px;
+  height: 2px;
+  background: var(--color-rule);
+  opacity: var(--gh-o);
+}
+
+.gh-level-1 {
+  --gh-o: 0.55;
+}
+
+.gh-level-1 .gh-dot {
+  width: 4.5px;
+  height: 4.5px;
+  background: var(--color-subtle);
+  opacity: var(--gh-o);
+}
+
+.gh-level-2 {
+  --gh-o: 1;
+}
+
+.gh-level-2 .gh-dot {
+  width: 6.5px;
+  height: 6.5px;
+  background: var(--color-subtle);
+  opacity: 1;
+}
+
+.gh-level-3 {
+  --gh-o: 1;
+}
+
+.gh-level-3 .gh-dot {
+  width: 8.5px;
+  height: 8.5px;
+  background: var(--color-muted);
+  opacity: 1;
+}
+
+.gh-level-4 {
+  --gh-o: 1;
+}
+
+.gh-level-4 .gh-dot {
+  width: var(--gh-cell);
+  height: var(--gh-cell);
+  background: var(--color-ink);
+  opacity: 1;
+}
+
+/* Breathing loop — transform/opacity only; duration + delay randomized per dot inline */
+@keyframes gh-dot-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: var(--gh-o, 1);
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: calc(var(--gh-o, 1) * 0.75);
+  }
+}
+
+.gh-profile-link {
+  margin-top: 16px;
+}
+
+/* ── Loading skeleton — static low-level dots while the backend wakes up ── */
+.gh-graph--skeleton .gh-dot {
+  animation: none !important;
+}
+
+/* ── Error state — inline message in place of the grid ── */
+.gh-error {
+  margin: 0;
+  padding: 28px 4px;
+  font-size: 13px;
+  color: var(--color-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-dot {
+    animation: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════
    CONTACT
    ═══════════════════════════════════════ */
 .contact-block {
