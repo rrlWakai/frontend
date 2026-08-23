@@ -19,6 +19,11 @@
     opacity: 1 !important;
     transform: none !important;
   }
+
+  .lh-avatar-img,
+  .lh-cover-img {
+    transition: none !important;
+  }
 }
 
 /* ═══════════════════════════════════════
@@ -42,11 +47,22 @@
 }
 
 .lh-cover-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.lh-cover-img.is-active {
+  opacity: 1;
+}
+
+.lh-cover-img-light {
+  opacity: 0;
 }
 
 /* Subtle grid/schematic pattern — swappable via --cover-bg or background-image */
@@ -199,10 +215,18 @@
 }
 
 .lh-avatar-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.lh-avatar-img.is-active {
+  opacity: 1;
 }
 
 .lh-avatar:hover {

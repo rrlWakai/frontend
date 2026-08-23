@@ -2,8 +2,6 @@ import { useState, useEffect, useCallback } from 'react'
 import { site } from '../data/site'
 import { useTheme } from '../hooks/useTheme'
 
-const COVER_SRC = '/coverr.png'
-
 function SunIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -54,9 +52,17 @@ function ResumeHeader() {
       {/* Full-bleed cover banner */}
       <div className="lh-cover" onClick={() => setLightboxOpen(true)}>
         <img
-          src={COVER_SRC}
-          alt="Cover banner"
+          src="/coverr.png"
+          alt={isDark ? 'Cover banner' : ''}
+          aria-hidden={!isDark}
           className="lh-cover-img"
+          draggable={false}
+        />
+        <img
+          src="/covermor.png"
+          alt={isDark ? '' : 'Cover banner'}
+          aria-hidden={isDark}
+          className={`lh-cover-img lh-cover-img-light${!isDark ? ' is-active' : ''}`}
           draggable={false}
         />
         <button
@@ -89,7 +95,7 @@ function ResumeHeader() {
             ✕
           </button>
           <img
-            src={COVER_SRC}
+            src={isDark ? '/coverr.png' : '/covermor.png'}
             alt="Cover banner full size"
             className="cover-lightbox-img"
             onClick={(e) => e.stopPropagation()}
@@ -102,9 +108,17 @@ function ResumeHeader() {
         {/* Avatar — overlaps the cover seam via negative margin */}
         <div className="lh-avatar anim-avatar">
           <img
+            src="/morning.png"
+            alt={isDark ? '' : site.name}
+            aria-hidden={isDark}
+            className={`lh-avatar-img${!isDark ? ' is-active' : ''}`}
+            draggable={false}
+          />
+          <img
             src="/profile.png"
-            alt={site.name}
-            className="lh-avatar-img"
+            alt={isDark ? site.name : ''}
+            aria-hidden={!isDark}
+            className={`lh-avatar-img${isDark ? ' is-active' : ''}`}
             draggable={false}
           />
         </div>
