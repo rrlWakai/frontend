@@ -106,8 +106,8 @@ function CertificationViewer({
           )}
         </dl>
 
-        <div className="cert-viewer-foot">
-          {certification.credentialUrl ? (
+        {certification.credentialUrl && (
+          <div className="cert-viewer-foot">
             <a
               href={certification.credentialUrl}
               target="_blank"
@@ -116,18 +116,8 @@ function CertificationViewer({
             >
               View original credential <span className="proj-arrow">↗</span>
             </a>
-          ) : (
-            <span />
-          )}
-          <div className="cert-viewer-navbtns">
-            <button type="button" className="cert-nav-btn" onClick={onPrev}>
-              ← Prev
-            </button>
-            <button type="button" className="cert-nav-btn" onClick={onNext}>
-              Next →
-            </button>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

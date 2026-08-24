@@ -1055,20 +1055,24 @@
   color: var(--color-subtle);
 }
 
-/* ── Document stack ── */
+/* ── Document pile ──
+   Every sheet is a real document; framer-motion owns transforms,
+   CSS handles surfaces. The pile order is state — clicking a sheet
+   behind moves it to the front. */
 .cert-stack-area {
   min-width: 0;
 }
 
 .cert-stack {
   position: relative;
-  /* reserves room so the offset sheets never collide with surroundings */
+  /* reserves room so offset sheets never collide with surroundings */
   margin: 0 32px 32px 0;
 }
 
 .cert-doc {
+  /* the active sheet stays in flow and sizes the pile;
+     background sheets anchor to the same origin */
   position: relative;
-  z-index: 3;
   display: block;
   width: 100%;
   text-align: left;
@@ -1080,73 +1084,57 @@
   padding: 18px 22px;
   cursor: pointer;
   transition:
-    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.35s,
     box-shadow 0.35s;
+  /* quiet build-in — opacity only, so transforms stay owned by motion */
+  animation: cert-doc-in 0.5s ease both;
+  animation-delay: calc(var(--pos, 0) * 80ms);
 }
 
-/* Dark mode elevates the active sheet instead */
-[data-theme="dark"] .cert-doc {
+@keyframes cert-doc-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Background sheets sit slightly quieter than the active one */
+.cert-doc:not(.cert-doc-active) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 14px 18px;
   background: var(--color-bg-subtle);
 }
 
-.cert-layer {
-  position: absolute;
-  inset: 0;
+[data-theme="dark"] .cert-doc-active {
+  background: var(--color-bg-subtle);
+}
+
+[data-theme="dark"] .cert-doc:not(.cert-doc-active) {
   background: var(--color-paper);
-  border: 1px solid var(--color-rule);
-  border-radius: 4px;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-[data-theme="dark"] .cert-layer {
-  background: var(--color-paper);
-}
-
-.cert-layer-1 {
-  z-index: 2;
-  transform: translate(8px, 8px);
-  opacity: 0.8;
-}
-
-.cert-layer-2 {
-  z-index: 1;
-  transform: translate(16px, 16px);
-  opacity: 0.55;
-}
-
-.cert-layer-3 {
-  z-index: 0;
-  transform: translate(24px, 24px);
-  opacity: 0.3;
 }
 
 @media (hover: hover) {
-  .cert-stack:hover .cert-doc,
-  .cert-doc:focus-visible {
-    transform: translateY(-6px);
+  /* Active sheet — lifts and sharpens, hints at inspection */
+  .cert-doc-active:hover,
+  .cert-doc-active:focus-visible {
     border-color: var(--color-muted);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   }
 
-  [data-theme="dark"] .cert-stack:hover .cert-doc,
-  [data-theme="dark"] .cert-doc:focus-visible {
+  [data-theme="dark"] .cert-doc-active:hover,
+  [data-theme="dark"] .cert-doc-active:focus-visible {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   }
 
-  .cert-stack:hover .cert-layer-1,
-  .cert-doc:focus-visible ~ .cert-layer-1 {
-    transform: translate(13px, 13px);
-  }
-
-  .cert-stack:hover .cert-layer-2,
-  .cert-doc:focus-visible ~ .cert-layer-2 {
-    transform: translate(21px, 21px);
-  }
-
-  .cert-stack:hover .cert-layer-3,
-  .cert-doc:focus-visible ~ .cert-layer-3 {
-    transform: translate(29px, 29px);
+  /* Background sheet — separates from the pile toward the user */
+  .cert-doc:not(.cert-doc-active):hover,
+  .cert-doc:not(.cert-doc-active):focus-visible {
+    border-color: var(--color-ink);
+    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.07);
   }
 }
 
@@ -1246,78 +1234,59 @@
 }
 
 @media (hover: hover) {
-  .cert-stack:hover .cert-doc-viewhint,
-  .cert-doc:focus-visible .cert-doc-viewhint {
+  .cert-doc-active:hover .cert-doc-viewhint,
+  .cert-doc-active:focus-visible .cert-doc-viewhint {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
 @media (hover: none) {
-  .cert-doc-viewhint {
+  .cert-doc-active .cert-doc-viewhint {
     opacity: 1;
     transform: none;
   }
 }
 
-.cert-stack:hover .cert-doc-viewhint .proj-arrow,
-.cert-doc:focus-visible .cert-doc-viewhint .proj-arrow {
+.cert-doc-active:hover .cert-doc-viewhint .proj-arrow,
+.cert-doc-active:focus-visible .cert-doc-viewhint .proj-arrow {
   transform: translate(2px, -2px);
 }
 
-/* ── Stack navigation ── */
-.cert-stack-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-top: 16px;
+/* ── Background sheet contents ── */
+.cert-doc:not(.cert-doc-active) .cert-doc-top {
+  margin-bottom: 8px;
 }
 
-.cert-counter {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--color-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.cert-nav-btns {
-  display: flex;
-  gap: 8px;
-}
-
-.cert-nav-btn {
-  border: 1px solid var(--color-rule);
-  background: transparent;
-  border-radius: 2px;
-  padding: 7px 12px;
-  font-size: 12px;
+.cert-doc-mini-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
   font-weight: 600;
-  font-family: inherit;
-  letter-spacing: 0.02em;
-  color: var(--color-body);
-  cursor: pointer;
-  transition:
-    border-color 0.25s,
-    color 0.25s,
-    background 0.25s,
-    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  line-height: 1.3;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.cert-nav-btn:hover {
-  border-color: var(--color-ink);
-  color: var(--color-ink);
+.cert-doc-mini-issuer {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-subtle);
 }
 
-.cert-nav-btn:active {
-  transform: translateY(1px);
-}
-
-.cert-nav-btn:focus-visible {
-  outline: 1px solid var(--color-ink);
-  outline-offset: 2px;
+/* ── Position indicator — metadata, not navigation ── */
+.cert-stack-count {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--color-subtle);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── Progression timeline ── */
@@ -1578,10 +1547,6 @@
 }
 
 .cert-viewer-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
   margin-top: 20px;
   padding-top: 16px;
   border-top: 1px solid var(--color-rule);
@@ -1591,11 +1556,6 @@
   font-size: 11.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.cert-viewer-navbtns {
-  display: flex;
-  gap: 8px;
 }
 
 /* ── Certifications — responsive ── */
@@ -1612,40 +1572,18 @@
     gap: 28px;
   }
 
-  .cert-stack {
-    margin: 0 26px 28px 0;
-  }
-
   .cert-timeline {
     margin-top: 32px;
   }
 }
 
 @media (max-width: 480px) {
-  .cert-stack {
-    margin: 0 22px 24px 0;
-  }
-
-  .cert-layer-1,
-  .cert-stack:hover .cert-layer-1,
-  .cert-doc:focus-visible ~ .cert-layer-1 {
-    transform: translate(6px, 6px);
-  }
-
-  .cert-layer-2,
-  .cert-stack:hover .cert-layer-2,
-  .cert-doc:focus-visible ~ .cert-layer-2 {
-    transform: translate(12px, 12px);
-  }
-
-  .cert-layer-3,
-  .cert-stack:hover .cert-layer-3,
-  .cert-doc:focus-visible ~ .cert-layer-3 {
-    transform: translate(18px, 18px);
-  }
-
-  .cert-doc {
+  .cert-doc-active {
     padding: 15px 16px;
+  }
+
+  .cert-doc:not(.cert-doc-active) {
+    padding: 12px 14px;
   }
 
   .cert-doc-title {
@@ -1662,23 +1600,6 @@
 
   .cert-viewer-sheet-title {
     font-size: 21px;
-  }
-
-  .cert-viewer-foot {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .cert-viewer-original {
-    justify-content: center;
-  }
-
-  .cert-viewer-navbtns {
-    justify-content: space-between;
-  }
-
-  .cert-viewer-navbtns .cert-nav-btn {
-    flex: 1;
   }
 }
 
