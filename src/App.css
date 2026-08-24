@@ -1065,8 +1065,9 @@
 
 .cert-stack {
   position: relative;
-  /* reserves room so offset sheets never collide with surroundings */
-  margin: 0 32px 32px 0;
+  /* height is pinned to the active sheet (JS) and eased so promoting
+     never jolts the content below the pile */
+  transition: height 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .cert-doc {
@@ -1085,7 +1086,8 @@
   cursor: pointer;
   transition:
     border-color 0.35s,
-    box-shadow 0.35s;
+    box-shadow 0.35s,
+    padding 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   /* quiet build-in — opacity only, so transforms stay owned by motion */
   animation: cert-doc-in 0.5s ease both;
   animation-delay: calc(var(--pos, 0) * 80ms);
@@ -1100,11 +1102,14 @@
   }
 }
 
-/* Background sheets sit slightly quieter than the active one */
+/* Background sheets keep the exact footprint of the active one, so
+   every exposed edge is a full-width click/tap surface and the pile
+   reads as sheets of identical paper. */
 .cert-doc:not(.cert-doc-active) {
   position: absolute;
   left: 0;
   top: 0;
+  height: 100%;
   padding: 14px 18px;
   background: var(--color-bg-subtle);
 }
@@ -1130,12 +1135,18 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   }
 
-  /* Background sheet — separates from the pile toward the user */
-  .cert-doc:not(.cert-doc-active):hover,
-  .cert-doc:not(.cert-doc-active):focus-visible {
+  /* Background sheet — separates from the document above it, like it
+     is about to be pulled out of the pile */
+  .cert-doc:not(.cert-doc-active):hover {
     border-color: var(--color-ink);
     box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.07);
   }
+}
+
+/* Background sheet — focus treatment works on any input device */
+.cert-doc:not(.cert-doc-active):focus-visible {
+  border-color: var(--color-ink);
+  box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.07);
 }
 
 .cert-doc:focus-visible {
@@ -1184,6 +1195,10 @@
   font-weight: 600;
   line-height: 1.25;
   margin-bottom: 14px;
+  /* the sheet "opens up" as it reaches the front */
+  transition:
+    font-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-bottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .cert-doc-rule {
@@ -1253,29 +1268,40 @@
   transform: translate(2px, -2px);
 }
 
-/* ── Background sheet contents ── */
+/* ── Background sheet state — same DOM, condensed presentation ── */
+.cert-doc-top {
+  transition: margin-bottom 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .cert-doc:not(.cert-doc-active) .cert-doc-top {
   margin-bottom: 8px;
 }
 
-.cert-doc-mini-title {
-  font-family: var(--font-serif);
+.cert-doc:not(.cert-doc-active) .cert-doc-title {
   font-size: 15px;
-  font-weight: 600;
   line-height: 1.3;
-  margin-bottom: 4px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  margin-bottom: 0;
 }
 
-.cert-doc-mini-issuer {
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--color-subtle);
+/* Issued date + category + CTA fold away while the sheet sits deep
+   in the pile, and unfold as it is pulled to the front */
+.cert-doc-details {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+}
+
+.cert-doc-details-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.cert-doc:not(.cert-doc-active) .cert-doc-details {
+  grid-template-rows: 0fr;
+  opacity: 0;
 }
 
 /* ── Position indicator — metadata, not navigation ── */
