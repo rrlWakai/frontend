@@ -172,6 +172,68 @@ export const education: Education = {
 }
 
 /* ═══════════════════════════════════════
+   CERTIFICATIONS — credential archive
+   Entries below are placeholders showing the intended shape.
+   To finalize:
+   - replace title / issuer / issuedDate / year / category with real credentials
+   - optionally add credentialId + credentialUrl (verification link)
+   - optionally add image (drop the file in /public, e.g. "/certs/rwd.png")
+   The section renders gracefully with or without images.
+   ═══════════════════════════════════════ */
+
+export type Certification = {
+  id: string
+  number: string
+  title: string
+  issuer: string
+  issuedDate: string
+  year: string
+  category: string
+  credentialId?: string
+  credentialUrl?: string
+  image?: string
+}
+
+export const certifications: Certification[] = [
+  {
+    id: 'cert-01',
+    number: '01',
+    title: 'Responsive Web Design',
+    issuer: 'freeCodeCamp',
+    issuedDate: 'May 20, 2026',
+    year: '2026',
+    category: 'WEB DEVELOPMENT',
+  },
+  {
+    id: 'cert-02',
+    number: '02',
+    title: 'Back End Development and APIs',
+    issuer: 'freeCodeCamp',
+    issuedDate: 'January 15, 2026',
+    year: '2026',
+    category: 'WEB DEVELOPMENT',
+  },
+  {
+    id: 'cert-03',
+    number: '03',
+    title: 'Foundations of UX Design',
+    issuer: 'Google',
+    issuedDate: 'September 3, 2025',
+    year: '2025',
+    category: 'UI/UX',
+  },
+  {
+    id: 'cert-04',
+    number: '04',
+    title: 'SQL (Intermediate)',
+    issuer: 'HackerRank',
+    issuedDate: 'November 21, 2024',
+    year: '2024',
+    category: 'DATABASE',
+  },
+]
+
+/* ═══════════════════════════════════════
    GITHUB ACTIVITY — data layer
    Live data comes from the backend service
    (GET {VITE_API_URL}/api/github-contributions),

@@ -3,6 +3,7 @@ import ResumeHeader from './sections/ResumeHeader'
 import ResumeSidebar from './sections/ResumeSidebar'
 import ProjectItem from './sections/ProjectItem'
 import EducationSection from './sections/EducationSection'
+import CertificationsSection from './sections/CertificationsSection'
 import GallerySection from './sections/GallerySection'
 import GitHubActivitySection from './sections/GitHubActivitySection'
 import ContactSection from './sections/ContactSection'
@@ -128,6 +129,11 @@ function App() {
           {/* ── Education ── */}
           <Reveal>
             <EducationSection />
+          </Reveal>
+
+          {/* ── Certifications ── */}
+          <Reveal>
+            <CertificationsSection />
           </Reveal>
 
           {/* ── Gallery ── */}

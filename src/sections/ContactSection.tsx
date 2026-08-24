@@ -4,7 +4,7 @@ function ContactSection() {
   return (
     <section id="contact" className="main-section">
       <div className="section-head">
-        <span className="section-num">06</span>
+        <span className="section-num">07</span>
         <span className="section-title-serif">Contact</span>
         <div className="section-rule" />
       </div>

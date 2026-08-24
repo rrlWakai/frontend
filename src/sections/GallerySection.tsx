@@ -45,7 +45,7 @@ function GallerySection({ photos }: GallerySectionProps) {
   return (
     <section id="gallery" className="main-section">
       <div className="section-head">
-        <span className="section-num">04</span>
+        <span className="section-num">05</span>
         <span className="section-title-serif">Gallery</span>
         <div className="section-rule" />
       </div>

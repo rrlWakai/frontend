@@ -89,7 +89,7 @@ function GitHubActivitySection({ status, stats, weeks }: GitHubActivitySectionPr
   return (
     <section id="github-activity" className="main-section">
       <div className="section-head">
-        <span className="section-num">05</span>
+        <span className="section-num">06</span>
         <span className="section-title-serif">GitHub Activity</span>
         <div className="section-rule" />
       </div>
