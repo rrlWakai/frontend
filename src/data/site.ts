@@ -134,7 +134,7 @@ export const projects: Project[] = [
     category: 'Business / Café Website',
     description:
       'A digital ordering and menu experience for a boutique café, focusing on clear menu presentation and an intuitive ordering flow.',
-    url: 'https://github.com/rrlWakai',
+    url: 'https://salingcafe.vercel.app/',
     featured: false,
   },
 ]
