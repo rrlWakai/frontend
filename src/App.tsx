@@ -9,6 +9,7 @@ import GitHubActivitySection from './sections/GitHubActivitySection'
 import ContactSection from './sections/ContactSection'
 import Footer from './components/Footer'
 import Reveal from './components/Reveal'
+import Loader from './components/Loader'
 import { useGitHubActivity } from './hooks/useGitHubActivity'
 import './App.css'
 
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <div className="app">
+      <Loader />
       <ResumeHeader />
 
       <div className="layout">

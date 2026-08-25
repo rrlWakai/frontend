@@ -16,7 +16,7 @@ function ProjectItem({ project, index }: { project: Project; index: number }) {
             <div className="proj-desc" style={{ marginBottom: 6 }}>{project.type}</div>
           )}
           {project.date && (
-            <div className="proj-desc" style={{ fontSize: 12.5, color: 'var(--color-subtle)', marginBottom: 6 }}>{project.date}</div>
+            <div className="proj-desc" style={{ fontSize: 12.5, color: 'var(--color-gray-light)', marginBottom: 6 }}>{project.date}</div>
           )}
           <p className="proj-desc">{project.description}</p>
           {project.technologies && (

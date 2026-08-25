@@ -5,13 +5,14 @@
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --color-paper: #ffffff;
-  --color-ink: #111111;
+  --color-paper: #F3F3F1;
+  --color-ink: #0E1013;
   --color-black: #000000;
-  --color-muted: #555555;
-  --color-subtle: #888888;
-  --color-rule: #d9d9d9;
-  --color-bg-subtle: #f7f7f7;
+  --color-navy: #1B2A4A;
+  --color-gray: #6B6D72;
+  --color-gray-light: #9A9CA1;
+  --color-line: #DBDAD5;
+  --color-bg-subtle: #f0efec;
   --color-body: #333333;
 }
 
@@ -20,9 +21,10 @@
   --color-paper: #15140f;
   --color-ink: #f2f0ea;
   --color-black: #000000;
-  --color-muted: #a8a49c;
-  --color-subtle: #7a766e;
-  --color-rule: #2e2c25;
+  --color-navy: #4A6FA5;
+  --color-gray: #A0A2A7;
+  --color-gray-light: #70727A;
+  --color-line: #2e2c25;
   --color-bg-subtle: #1c1b15;
   --color-body: #d5d2ca;
 }
