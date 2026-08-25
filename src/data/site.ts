@@ -110,13 +110,14 @@ export const projects: Project[] = [
     technologies: ['React', 'TypeScript', 'PayMongo'],
   },
   {
-    id: 'owlie',
-    name: 'Owlie',
-    category: 'Education / Study Application',
+    id: 'yuhrum-villas',
+    name: 'Yuhrum Villas',
+    category: 'HOSPITALITY / VILLA WEBSITE',
     description:
-      'An education mobile application helping students track learning progress and build consistent study habits through structured progress monitoring.',
-    url: 'https://github.com/rrlWakai',
+      'Designed and developed a responsive hospitality website for Yuhrum Villas, combining structured property presentation, responsive layouts, and subtle interactions to create a refined and engaging guest experience.',
+    url: 'https://yuh-rum.vercel.app/',
     featured: false,
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
   },
   {
     id: 'timeless-resort',
@@ -147,7 +148,7 @@ export type Photo = {
 export const photos: Photo[] = [
   { name: 'KRiB Launch', year: '2026', src: 'https://picsum.photos/seed/krib/360/480' },
   { name: 'Premier Rentals', year: '2026', src: 'https://picsum.photos/seed/premier/360/480' },
-  { name: 'Owlie App', year: '2025', src: 'https://picsum.photos/seed/owlie/360/480' },
+  { name: 'Yuhrum Villas', year: '2025', src: 'https://picsum.photos/seed/yuhrum/360/480' },
   { name: 'Timeless Resort', year: '2025', src: 'https://picsum.photos/seed/resort/360/480' },
   { name: 'Saling Café', year: '2025', src: 'https://picsum.photos/seed/cafe/360/480' },
   { name: 'Campus Project', year: '2024', src: 'https://picsum.photos/seed/campus/360/480' },
