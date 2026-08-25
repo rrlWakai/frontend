@@ -125,7 +125,7 @@ export const projects: Project[] = [
     category: 'Hospitality Website',
     description:
       'A resort website built around fast search and clear availability, designed to present accommodations and booking options in a clean, accessible format.',
-    url: 'https://github.com/rrlWakai',
+    url: 'https://timelessresort.vercel.app/',
     featured: false,
   },
   {
