@@ -5,8 +5,9 @@ import { certifications } from '../data/site'
 import type { Certification } from '../data/site'
 import CertificationViewer from './CertificationViewer'
 
-/* Sheets rendered as separate documents; extras stay reachable via
-   keyboard navigation once the pile grows past this depth. */
+/* Sheets rendered as separate documents; extras stay reachable via the
+   prev/next controls (and arrow keys) once the pile grows past this
+   depth, or all at once through the "view all" grid. */
 const MAX_VISIBLE = 5
 
 /** Physical offset (px) per depth level — roomier on touch screens */
@@ -93,6 +94,14 @@ function CertificationSheet({
       <div className="cert-doc-details">
         <div className="cert-doc-details-inner">
           <div className="cert-doc-rule" />
+          {cert.image && (
+            <img
+              className="cert-doc-thumb"
+              src={cert.image}
+              alt={`${cert.title} certificate preview`}
+              decoding="async"
+            />
+          )}
           <div className="cert-doc-issued">
             <span className="cert-doc-issued-label">Issued</span> {cert.issuedDate}
           </div>
@@ -116,6 +125,7 @@ function CertificationsSection() {
      front and keeps every other sheet in its relative position. */
   const [order, setOrder] = useState<number[]>(() => certifications.map((_, i) => i))
   const [viewerIndex, setViewerIndex] = useState<number | null>(null)
+  const [showAll, setShowAll] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const stackRef = useRef<HTMLDivElement>(null)
 
@@ -157,19 +167,33 @@ function CertificationsSection() {
     })
   }, [])
 
-  /* Hidden keyboard navigation — no visible arrows, purely a11y */
+  /* Rotate through the FULL order array, wrapping at both ends —
+     next sends the top sheet to the back of the pile, prev pulls the
+     bottom sheet to the front. Shared by the visible arrow buttons
+     and the keyboard, so every credential is reachable either way. */
+  const rotateNext = useCallback(() => {
+    setOrder((prev) => (prev.length < 2 ? prev : [...prev.slice(1), prev[0]]))
+  }, [])
+
+  const rotatePrev = useCallback(() => {
+    setOrder((prev) =>
+      prev.length < 2 ? prev : [prev[prev.length - 1], ...prev.slice(0, -1)],
+    )
+  }, [])
+
+  /* Keyboard mirrors the visible arrows */
   const handleStackKeyDown = useCallback(
     (e: ReactKeyboardEvent<HTMLDivElement>) => {
       if (total < 2) return
       if (e.key === 'ArrowRight') {
         e.preventDefault()
-        promote(order[1])
+        rotateNext()
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
-        setOrder((prev) => [...prev.slice(1), prev[0]])
+        rotatePrev()
       }
     },
-    [order, promote, total],
+    [rotateNext, rotatePrev, total],
   )
 
   /* Pin the pile's height to the active sheet so promoting never
@@ -187,7 +211,9 @@ function CertificationsSection() {
     const ro = new ResizeObserver(sync)
     ro.observe(active)
     return () => ro.disconnect()
-  }, [activeIndex, step])
+    /* showAll in deps re-syncs the pinned height after the pile
+       remounts on the way back from the grid view */
+  }, [activeIndex, step, showAll])
 
   /* Timeline points — one per distinct year, positioned proportionally */
   const sortedYears = useMemo(() => [...new Set(certifications.map((c) => c.year))].sort(), [])
@@ -216,48 +242,128 @@ function CertificationsSection() {
         <div className="section-rule" />
       </div>
 
-      <div className="cert-layout">
-        {/* Left — collection note */}
-        <div className="cert-intro">
-          <p className="cert-intro-text">
-            A collection of learning milestones and professional growth.
-          </p>
-          <div className="cert-intro-meta">
-            {String(total).padStart(2, '0')} CREDENTIALS · {sortedYears[0]}—
-            {sortedYears[sortedYears.length - 1]}
+      {/* Grid view spans the section's full width — the intro column
+          steps aside entirely while it is open */}
+      <div className={`cert-layout${showAll ? ' cert-layout--full' : ''}`}>
+        {/* Left — collection note (stack view only) */}
+        {!showAll && (
+          <div className="cert-intro">
+            <p className="cert-intro-text">
+              A collection of learning milestones and professional growth.
+            </p>
+            <div className="cert-intro-meta">
+              {String(total).padStart(2, '0')} CREDENTIALS · {sortedYears[0]}—
+              {sortedYears[sortedYears.length - 1]}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Right — browsable document pile */}
+        {/* Right — credential display: controls header on top, then either
+            the document pile or the all-credentials grid in its place */}
         <div className="cert-stack-area">
-          <div
-            ref={stackRef}
-            className="cert-stack"
-            role="group"
-            aria-label={`Credential stack — ${activeCert.title} on top`}
-            onKeyDown={handleStackKeyDown}
-            style={{
-              /* reserve room for the widest cascade + hover lift */
-              marginRight: step * (visibleCount - 1) + 10,
-              marginBottom: step * (visibleCount - 1) + 10,
-            }}
-          >
-            {order.slice(0, visibleCount).map((certIdx, pos) => (
-              <CertificationSheet
-                key={certifications[certIdx].id}
-                cert={certifications[certIdx]}
-                pos={pos}
-                visibleCount={visibleCount}
-                step={step}
-                reducedMotion={Boolean(prefersReducedMotion)}
-                onSelect={() => (pos === 0 ? openViewer(certIdx) : promote(certIdx))}
-              />
-            ))}
+          {/* Header row — stack navigation + view toggle live above the
+              display; arrows and the counter are stack-specific, so they
+              step aside while the grid is open. The toggle always stays. */}
+          <div className="cert-stack-controls">
+            {!showAll && (
+              <span className="cert-stack-count" aria-live="polite">
+                {displayNumber} / {String(total).padStart(2, '0')}
+              </span>
+            )}
+            <div className="cert-stack-actions">
+              {!showAll && (
+                <div className="cert-stack-nav">
+                  <button
+                    type="button"
+                    className="cert-nav-btn"
+                    onClick={rotatePrev}
+                    disabled={total < 2}
+                    aria-label="Previous credential"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    className="cert-nav-btn"
+                    onClick={rotateNext}
+                    disabled={total < 2}
+                    aria-label="Next credential"
+                  >
+                    →
+                  </button>
+                </div>
+              )}
+              <button
+                type="button"
+                className="cert-grid-toggle"
+                onClick={() => setShowAll((v) => !v)}
+                aria-expanded={showAll}
+                aria-controls="cert-grid"
+              >
+                {showAll ? 'Back to stack' : 'View all'}
+              </button>
+            </div>
           </div>
 
-          <div className="cert-stack-count" aria-live="polite">
-            {displayNumber} / {String(total).padStart(2, '0')}
-          </div>
+          {showAll ? (
+            /* All-credentials grid — replaces the pile while active.
+               Every card opens the same viewer the pile uses. */
+            <ul id="cert-grid" className="cert-grid" role="list">
+              {certifications.map((cert, idx) => (
+                <li key={cert.id}>
+                  <button
+                    type="button"
+                    className="cert-grid-card"
+                    onClick={() => openViewer(idx)}
+                    aria-label={`${cert.title} — open credential viewer`}
+                  >
+                    <span className="cert-grid-top">
+                      <span>CERT. {cert.number}</span>
+                      <span className="cert-grid-year">{cert.year}</span>
+                    </span>
+                    {cert.image && (
+                      <img
+                        className="cert-doc-thumb"
+                        src={cert.image}
+                        alt={`${cert.title} certificate preview`}
+                        decoding="async"
+                        loading="lazy"
+                      />
+                    )}
+                    <span className="cert-grid-issuer">{cert.issuer}</span>
+                    <span className="cert-grid-title">{cert.title}</span>
+                    <span className="cert-grid-desc">{cert.description}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            /* Browsable document pile */
+            <div
+              ref={stackRef}
+              className="cert-stack"
+              role="group"
+              aria-label={`Credential stack — ${activeCert.title} on top`}
+              onKeyDown={handleStackKeyDown}
+              style={{
+                /* reserve room for the widest cascade + hover lift */
+                marginRight: step * (visibleCount - 1) + 10,
+                marginBottom: step * (visibleCount - 1) + 10,
+              }}
+            >
+              {order.slice(0, visibleCount).map((certIdx, pos) => (
+                <CertificationSheet
+                  key={certifications[certIdx].id}
+                  cert={certifications[certIdx]}
+                  pos={pos}
+                  visibleCount={visibleCount}
+                  step={step}
+                  reducedMotion={Boolean(prefersReducedMotion)}
+                  onSelect={() => (pos === 0 ? openViewer(certIdx) : promote(certIdx))}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

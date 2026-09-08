@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
-import { site } from '../data/site'
+import { certifications, site } from '../data/site'
+import CredentialBadge from '../components/CredentialBadge'
 import { useTheme } from '../hooks/useTheme'
 
 function SunIcon() {
@@ -32,6 +33,12 @@ function ResumeHeader() {
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
   const closeLightbox = useCallback(() => setLightboxOpen(false), [])
+
+  /* Featured credential badge next to the name — issuer/title/logo are
+     pulled from the certifications data. Swap the id below to feature a
+     different credential (falls back to the first entry). */
+  const featuredCredential =
+    certifications.find((c) => c.id === 'web-development-fundamentals') ?? certifications[0]
 
   useEffect(() => {
     if (!lightboxOpen) return
@@ -127,7 +134,15 @@ function ResumeHeader() {
         <div className="lh-body">
           <div className="lh-left">
             <div className="lh-text">
-              <h1 className="lh-name anim-identity anim-identity-1">{site.name}</h1>
+              <h1 className="lh-name anim-identity anim-identity-1">
+                {site.name}
+                {featuredCredential && (
+                  <CredentialBadge
+                    issuerName={featuredCredential.issuer}
+                    credentialTitle={featuredCredential.title}
+                  />
+                )}
+              </h1>
               <div className="lh-role anim-identity anim-identity-2">{site.role}</div>
             </div>
           </div>

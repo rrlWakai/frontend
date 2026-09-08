@@ -89,6 +89,10 @@ function CertificationViewer({
 
         <h3 className="cert-viewer-title">{certification.title}</h3>
 
+        {certification.description && (
+          <p className="cert-viewer-desc">{certification.description}</p>
+        )}
+
         <dl className="cert-viewer-meta">
           <div className="cert-viewer-meta-row">
             <dt>Issuer</dt>

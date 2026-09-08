@@ -174,12 +174,13 @@ export const education: Education = {
 
 /* ═══════════════════════════════════════
    CERTIFICATIONS — credential archive
-   Entries below are placeholders showing the intended shape.
-   To finalize:
-   - replace title / issuer / issuedDate / year / category with real credentials
-   - optionally add credentialId + credentialUrl (verification link)
-   - optionally add image (drop the file in /public, e.g. "/certs/rwd.png")
-   The section renders gracefully with or without images.
+   One entry per certificate scan in /public; titles are derived from
+   the image filenames. `description` carries the recruiter-facing
+   one-liner for each credential. issuer / issuedDate / year / category
+   are left blank, and credentialId / credentialUrl omitted, wherever a
+   "// TODO: confirm" marker appears — fill in real values as each
+   credential is verified. The section renders gracefully with or
+   without images.
    ═══════════════════════════════════════ */
 
 export type Certification = {
@@ -190,6 +191,8 @@ export type Certification = {
   issuedDate: string
   year: string
   category: string
+  /** Recruiter-facing one-liner — what the credential demonstrates */
+  description: string
   credentialId?: string
   credentialUrl?: string
   image?: string
@@ -199,38 +202,158 @@ export const certifications: Certification[] = [
   {
     id: 'cert-01',
     number: '01',
-    title: 'Responsive Web Design',
-    issuer: 'freeCodeCamp',
-    issuedDate: 'May 20, 2026',
-    year: '2026',
-    category: 'WEB DEVELOPMENT',
+    title: 'Computer Hardware Basics',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Core hardware knowledge for diagnosing and assembling systems — the foundation for reliable technical support.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Computer Hardware Basics.png',
   },
   {
     id: 'cert-02',
     number: '02',
-    title: 'Back End Development and APIs',
-    issuer: 'freeCodeCamp',
-    issuedDate: 'January 15, 2026',
-    year: '2026',
-    category: 'WEB DEVELOPMENT',
+    title: 'Computer Systems Servicing (NC II)',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Government-certified competency in installing, configuring, and maintaining computer systems and networks, validated to a national skills standard.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Computer Systems Servicing.png',
   },
   {
     id: 'cert-03',
     number: '03',
-    title: 'Foundations of UX Design',
-    issuer: 'Google',
-    issuedDate: 'September 3, 2025',
-    year: '2025',
-    category: 'UI/UX',
+    title: 'Data Analytics Essentials',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Data collection, analysis, and visualization fundamentals — supports building data-informed features like booking trends or occupancy reports.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Data Analytics Essentials.png',
   },
   {
     id: 'cert-04',
     number: '04',
-    title: 'SQL (Intermediate)',
-    issuer: 'HackerRank',
-    issuedDate: 'November 21, 2024',
-    year: '2024',
-    category: 'DATABASE',
+    title: 'Batang Techno: Hackathon Seminar and Orientation',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Hands-on exposure to collaborative, time-boxed problem-solving in a university hackathon setting.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Hackton.png',
+  },
+  {
+    id: 'cert-05',
+    number: '05',
+    title: 'HTML Essentials',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Core web markup fundamentals underpinning all frontend work, from this portfolio to client booking platforms.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Html essentials.png',
+  },
+  {
+    id: 'cert-06',
+    number: '06',
+    title: 'Introduction to Data Science',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Foundational data science workflow — groundwork for analytics-driven features in future projects.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Introduction to Data Science.png',
+  },
+  {
+    id: 'cert-07',
+    number: '07',
+    title: 'Network Addressing and Basic Troubleshooting',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'IP addressing and troubleshooting methodology, directly useful for diagnosing connectivity issues in deployed apps.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Network Addressing and Basic Troubleshooting.png',
+  },
+  {
+    id: 'cert-08',
+    number: '08',
+    title: 'Networking Basics',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Core networking concepts — topologies, protocols, devices — essential for building and maintaining connected, real-time systems.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Networking Basics.png',
+  },
+  {
+    id: 'cert-09',
+    number: '09',
+    title: 'Networking Devices and Initial Configuration',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Practical router/switch configuration, demonstrating the ability to set up and secure network infrastructure.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Networking Devices and Initial Configuration.png',
+  },
+  {
+    id: 'cert-10',
+    number: '10',
+    title: 'Operating Systems Basics',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'OS installation, configuration, and management skills, relevant to deploying and supporting apps across environments.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Operating Systems Basics.png',
+  },
+  {
+    id: 'cert-11',
+    number: '11',
+    title: 'Using Computer and Mobile Devices',
+    issuer: '', // TODO: confirm
+    issuedDate: '', // TODO: confirm
+    year: '', // TODO: confirm
+    category: '', // TODO: confirm
+    description:
+      'Digital literacy fundamentals across computers and mobile platforms — the baseline expected of any technical hire.',
+    // TODO: confirm — add credentialId / credentialUrl
+    image: '/Using Computer and Mobile Devices.png',
+  },
+  {
+    id: 'web-development-fundamentals',
+    number: '12', // slotted last to match the array's image-filename order — revisit once issuedDate is confirmed
+    title: 'Web Development Fundamentals',
+    issuer: 'IBM SkillsBuild',
+    issuedDate: '', // TODO: confirm exact completion date
+    year: '', // TODO: confirm issued year — only have the badge graphic, not the dated certificate
+    category: 'Web Development',
+    description:
+      'Foundational web development concepts covering structure, styling, and client-side interactivity as part of IBM\'s SkillsBuild program.',
+    credentialId: '', // TODO: fill in if shown on the actual certificate/credential page
+    image: '/Web Development Fundamentals.png',
   },
 ]
 
