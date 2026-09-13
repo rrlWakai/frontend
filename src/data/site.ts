@@ -72,6 +72,10 @@ export type Project = {
   type?: string
   description: string
   url: string
+  /** Thumbnail for the Selected Work coverflow — drop the real
+      capture at /public/screenshots/<id>.png; a styled placeholder
+      panel renders until the file exists. */
+  screenshot?: string
   featured: boolean
   date?: string
   technologies?: string[]
@@ -87,6 +91,7 @@ export const projects: Project[] = [
     description:
       'Built a hospitality reservation system that allows guests to submit bookings online while automatically notifying the property owner through Semaphore SMS when a new reservation is received.',
     url: 'https://krib-tau.vercel.app/',
+    screenshot: '/screenshots/krib.png',
     featured: true,
     date: 'July 6, 2026',
     technologies: ['React', 'TypeScript', 'Supabase', 'Semaphore SMS'],
@@ -105,6 +110,7 @@ export const projects: Project[] = [
     description:
       'Built a reservation system for two rental properties, integrating property selection, booking details, and PayMongo payments for the required 50% down payment.',
     url: 'https://premier-rentalss-7x33.vercel.app/',
+    screenshot: '/screenshots/premier-rentals.png',
     featured: false,
     date: 'March 10, 2026',
     technologies: ['React', 'TypeScript', 'PayMongo'],
@@ -116,6 +122,7 @@ export const projects: Project[] = [
     description:
       'Designed and developed a responsive hospitality website for Yuhrum Villas, combining structured property presentation, responsive layouts, and subtle interactions to create a refined and engaging guest experience.',
     url: 'https://yuh-rum.vercel.app/',
+    screenshot: '/screenshots/yuhrum-villas.png',
     featured: false,
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
   },
@@ -126,6 +133,7 @@ export const projects: Project[] = [
     description:
       'A resort website built around fast search and clear availability, designed to present accommodations and booking options in a clean, accessible format.',
     url: 'https://timelessresort.vercel.app/',
+    screenshot: '/screenshots/timeless-resort.png',
     featured: false,
   },
   {
@@ -135,6 +143,7 @@ export const projects: Project[] = [
     description:
       'A digital ordering and menu experience for a boutique café, focusing on clear menu presentation and an intuitive ordering flow.',
     url: 'https://salingcafe.vercel.app/',
+    screenshot: '/screenshots/saling-cafe.png',
     featured: false,
   },
 ]

@@ -1,7 +1,7 @@
 import { projects, photos } from './data/site'
 import ResumeHeader from './sections/ResumeHeader'
 import ResumeSidebar from './sections/ResumeSidebar'
-import ProjectItem from './sections/ProjectItem'
+import ProjectCoverflow from './sections/ProjectCoverflow'
 import EducationSection from './sections/EducationSection'
 import CertificationsSection from './sections/CertificationsSection'
 import GallerySection from './sections/GallerySection'
@@ -14,8 +14,6 @@ import { useGitHubActivity } from './hooks/useGitHubActivity'
 import './App.css'
 
 function App() {
-  const featuredProject = projects.find((p) => p.featured)
-  const otherProjects = projects.filter((p) => !p.featured)
   const activity = useGitHubActivity()
 
   return (
@@ -77,55 +75,17 @@ function App() {
 
           {/* ── Selected Work ── */}
           <section id="projects" className="main-section">
-            <div className="section-head">
-              <span className="section-num">02</span>
-              <span className="section-title-serif">Selected Work</span>
-              <div className="section-rule" />
-            </div>
+            <Reveal>
+              <div className="section-head">
+                <span className="section-num">02</span>
+                <span className="section-title-serif">Selected Work</span>
+                <div className="section-rule" />
+              </div>
+            </Reveal>
 
-            {/* Featured project — KRiB */}
-            {featuredProject && (
-              <Reveal>
-                <div className="featured-project">
-                  <div className="featured-project-head">
-                    <span className="featured-project-name">{featuredProject.name}</span>
-                    <span className="featured-project-category">{featuredProject.category}</span>
-                  </div>
-                  <div className="featured-project-meta">
-                    {featuredProject.type && <span>{featuredProject.type}</span>}
-                    {featuredProject.type && featuredProject.date && (
-                      <span className="featured-project-meta-dot" />
-                    )}
-                    {featuredProject.date && <span>{featuredProject.date}</span>}
-                  </div>
-                  <p className="featured-project-desc">{featuredProject.description}</p>
-                  {featuredProject.technologies && (
-                    <div className="featured-tech">
-                      {featuredProject.technologies.map((t) => (
-                        <span key={t} className="featured-tech-item">{t}</span>
-                      ))}
-                    </div>
-                  )}
-                  <a
-                    href={featuredProject.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="featured-project-link"
-                  >
-                    View Project <span className="proj-arrow">↗</span>
-                  </a>
-                </div>
-              </Reveal>
-            )}
-
-            {/* Other projects — editorial list */}
-            <div className="project-list">
-              {otherProjects.map((project, i) => (
-                <Reveal key={project.id} delay={i * 0.05}>
-                  <ProjectItem project={project} index={projects.indexOf(project)} />
-                </Reveal>
-              ))}
-            </div>
+            <Reveal delay={0.08}>
+              <ProjectCoverflow projects={projects} />
+            </Reveal>
           </section>
 
           {/* ── Education ── */}
