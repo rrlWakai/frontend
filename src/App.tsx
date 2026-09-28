@@ -9,6 +9,7 @@ import GitHubActivitySection from "./sections/GitHubActivitySection";
 import ContactSection from "./sections/ContactSection";
 import Footer from "./components/Footer";
 import Reveal from "./components/Reveal";
+import StatsStrip from "./components/StatsStrip";
 import Loader from "./components/Loader";
 import { useGitHubActivity } from "./hooks/useGitHubActivity";
 import "./App.css";
@@ -25,6 +26,8 @@ function App() {
         <ResumeSidebar />
 
         <main className="main">
+          <StatsStrip />
+
           {/* ── Experience ── */}
           <section id="experience" className="main-section">
             <Reveal>
