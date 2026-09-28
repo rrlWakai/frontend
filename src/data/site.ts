@@ -65,6 +65,21 @@ export const toolsStack = [
   'Vercel',
 ]
 
+export type ProjectCaseStudy = {
+  slug?: string
+  role?: string
+  client?: string
+  year?: string
+  liveUrl?: string
+  repoUrl?: string
+  heroImage?: string
+  problem?: string
+  solution?: string
+  results?: { value?: string; label?: string }[]
+  galleryImages?: { src?: string; alt?: string; layout?: 'wide' | 'mobile' }[]
+  techTags?: string[]
+}
+
 export type Project = {
   id: string
   name: string
@@ -80,6 +95,7 @@ export type Project = {
   date?: string
   technologies?: string[]
   features?: string[]
+  caseStudy?: ProjectCaseStudy
 }
 
 export const projects: Project[] = [
@@ -101,6 +117,19 @@ export const projects: Project[] = [
       'Guest Capacity',
       'Reservation Workflow',
     ],
+    caseStudy: {
+      slug: 'krib',
+      role: 'Full-Stack Web Developer',
+      client: 'TODO: add confirmed client name',
+      year: '2026',
+      liveUrl: 'https://kribproperties.com/',
+      heroImage: '/screenshots/krib.png',
+      problem: 'TODO: add real problem statement',
+      solution:
+        'Built a hospitality reservation system that allows guests to submit bookings online while automatically notifying the property owner through Semaphore SMS when a new reservation is received.',
+      results: [],
+      techTags: ['React', 'TypeScript', 'Supabase', 'Semaphore SMS'],
+    },
   },
   {
     id: 'premier-rentals',
@@ -114,6 +143,19 @@ export const projects: Project[] = [
     featured: false,
     date: 'March 10, 2026',
     technologies: ['React', 'TypeScript', 'PayMongo'],
+    caseStudy: {
+      slug: 'premier-rentals',
+      role: 'Full-Stack Web Developer',
+      client: 'TODO: add confirmed client name',
+      year: '2026',
+      liveUrl: 'https://premier-rentalss-7x33.vercel.app/',
+      heroImage: '/screenshots/premier-rentals.png',
+      problem: 'TODO: add real problem statement',
+      solution:
+        'Built a reservation system for two rental properties, integrating property selection, booking details, and PayMongo payments for the required 50% down payment.',
+      results: [],
+      techTags: ['React', 'TypeScript', 'PayMongo'],
+    },
   },
   {
     id: 'yuhrum-villas',
@@ -125,6 +167,19 @@ export const projects: Project[] = [
     screenshot: '/screenshots/yuhrum-villas.png',
     featured: false,
     technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    caseStudy: {
+      slug: 'yuhrum-villas',
+      role: 'Full-Stack Web Developer',
+      client: 'TODO: add confirmed client name',
+      year: 'TODO: add project year',
+      liveUrl: 'https://yuh-rum.vercel.app/',
+      heroImage: '/screenshots/yuhrum-villas.png',
+      problem: 'TODO: add real problem statement',
+      solution:
+        'Designed and developed a responsive hospitality website for Yuhrum Villas, combining structured property presentation, responsive layouts, and subtle interactions to create a refined and engaging guest experience.',
+      results: [],
+      techTags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    },
   },
   {
     id: 'timeless-resort',
@@ -135,6 +190,18 @@ export const projects: Project[] = [
     url: 'https://timelessresort.vercel.app/',
     screenshot: '/screenshots/timeless-resort.png',
     featured: false,
+    caseStudy: {
+      slug: 'timeless-resort',
+      role: 'Full-Stack Web Developer',
+      client: 'TODO: add confirmed client name',
+      year: 'TODO: add project year',
+      liveUrl: 'https://timelessresort.vercel.app/',
+      heroImage: '/screenshots/timeless-resort.png',
+      problem: 'TODO: add real problem statement',
+      solution:
+        'A resort website built around fast search and clear availability, designed to present accommodations and booking options in a clean, accessible format.',
+      results: [],
+    },
   },
   {
     id: 'saling-cafe',
