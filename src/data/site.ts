@@ -6,7 +6,7 @@ export const site = {
   email: 'lumborhenrhen@gmail.com',
   github: 'https://github.com/rrlWakai',
   summary:
-    'Software engineer and website business developer focused on building modern websites and practical digital solutions for businesses. I work across UI/UX, frontend development, and full-stack implementation to create digital experiences that are clear, responsive, and built around real business needs.',
+    'Full-stack developer and business problem solver. I work with owners and teams to turn unclear problems into reliable, production-ready products, owning UX, engineering, and delivery end to end. Industry-agnostic, outcome-driven.',
 } as const
 
 export type SkillCategory = {
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     type: 'Hospitality / Villa Reservation System',
     description:
       'Built a hospitality reservation system that allows guests to submit bookings online while automatically notifying the property owner through Semaphore SMS when a new reservation is received.',
-    url: 'https://krib-tau.vercel.app/',
+    url: 'https://kribproperties.com/',
     screenshot: '/screenshots/krib.png',
     featured: true,
     date: 'July 6, 2026',

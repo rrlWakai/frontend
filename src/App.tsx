@@ -1,20 +1,20 @@
-import { projects, photos } from './data/site'
-import ResumeHeader from './sections/ResumeHeader'
-import ResumeSidebar from './sections/ResumeSidebar'
-import ProjectCoverflow from './sections/ProjectCoverflow'
-import EducationSection from './sections/EducationSection'
-import CertificationsSection from './sections/CertificationsSection'
-import GallerySection from './sections/GallerySection'
-import GitHubActivitySection from './sections/GitHubActivitySection'
-import ContactSection from './sections/ContactSection'
-import Footer from './components/Footer'
-import Reveal from './components/Reveal'
-import Loader from './components/Loader'
-import { useGitHubActivity } from './hooks/useGitHubActivity'
-import './App.css'
+import { projects, photos } from "./data/site";
+import ResumeHeader from "./sections/ResumeHeader";
+import ResumeSidebar from "./sections/ResumeSidebar";
+import ProjectCoverflow from "./sections/ProjectCoverflow";
+import EducationSection from "./sections/EducationSection";
+import CertificationsSection from "./sections/CertificationsSection";
+import GallerySection from "./sections/GallerySection";
+import GitHubActivitySection from "./sections/GitHubActivitySection";
+import ContactSection from "./sections/ContactSection";
+import Footer from "./components/Footer";
+import Reveal from "./components/Reveal";
+import Loader from "./components/Loader";
+import { useGitHubActivity } from "./hooks/useGitHubActivity";
+import "./App.css";
 
 function App() {
-  const activity = useGitHubActivity()
+  const activity = useGitHubActivity();
 
   return (
     <div className="app">
@@ -38,13 +38,17 @@ function App() {
             <Reveal delay={0.08}>
               <div className="exp-block">
                 <div className="exp-header">
-                  <div className="exp-title">Website Business Developer — <span className="exp-company">Freelance</span></div>
+                  <div className="exp-title">
+                    Full-Stack Web Developer —{" "}
+                    <span className="exp-company">Freelance</span>
+                  </div>
                 </div>
                 <p className="exp-desc">
-                  Design and develop professional websites and digital solutions for businesses,
-                  translating business requirements into responsive, user-focused experiences.
-                  Work across website development, UI/UX, system implementation, and
-                  business-focused web solutions.
+                  Partner with business owners to turn operational problems into
+                  production-ready web products. Own the full lifecycle, from UX
+                  design and frontend engineering to backend systems and
+                  deployment, delivering booking platforms, e-commerce
+                  solutions, and business websites built to convert and scale.
                 </p>
                 <div className="exp-focus-line">
                   <span>Website Development</span>
@@ -58,15 +62,23 @@ function App() {
 
             <Reveal delay={0.16}>
               <div className="selected-business">
-                <div className="selected-business-label">SELECTED BUSINESS WORK</div>
+                <div className="selected-business-label">
+                  SELECTED BUSINESS WORK
+                </div>
                 <div className="selected-business-list">
                   <div className="selected-business-item">
                     <span className="selected-business-name">KRiB</span>
-                    <span className="selected-business-type">Reservation System</span>
+                    <span className="selected-business-type">
+                      Reservation System
+                    </span>
                   </div>
                   <div className="selected-business-item">
-                    <span className="selected-business-name">Premier Rentals</span>
-                    <span className="selected-business-type">Reservation System</span>
+                    <span className="selected-business-name">
+                      Premier Rentals
+                    </span>
+                    <span className="selected-business-type">
+                      Reservation System
+                    </span>
                   </div>
                 </div>
               </div>
@@ -119,7 +131,7 @@ function App() {
 
       <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
