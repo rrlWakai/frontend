@@ -50,8 +50,13 @@
   }
 
   .lh-avatar-img,
-  .lh-cover-img {
+  .lh-cover-img,
+  .cert-doc-thumb {
     transition: none !important;
+  }
+
+  .postit {
+    animation: none !important;
   }
 }
 
@@ -1475,6 +1480,20 @@
   border-radius: 2px;
   background: var(--color-bg-subtle);
   margin-bottom: 12px;
+  filter: grayscale(100%);
+  transition: filter 0.45s ease;
+}
+
+@media (hover: hover) {
+  .cert-doc-active:hover .cert-doc-thumb,
+  .cert-grid-card:hover .cert-doc-thumb {
+    filter: grayscale(0%);
+  }
+}
+
+.cert-doc-active:focus-visible .cert-doc-thumb,
+.cert-grid-card:focus-visible .cert-doc-thumb {
+  filter: grayscale(0%);
 }
 
 /* ── Stack controls — counter + view-all toggle + prev/next ──
@@ -2361,6 +2380,7 @@
    CONTACT
    ═══════════════════════════════════════ */
 .contact-block {
+  position: relative;
   padding: 20px 0;
 }
 
@@ -2398,6 +2418,211 @@
 
 .contact-btn:hover .proj-arrow {
   transform: translate(3px, -3px);
+}
+
+/* ── Sticky note — one random tip per session, deliberately the only
+   non-neutral colour in the section so it reads as a real post-it. ── */
+.postit {
+  position: absolute;
+  top: -22px;
+  right: 12px;
+  max-width: 170px;
+  background: #fff6b8;
+  color: #2a2a1a;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 12px 12px 14px;
+  border-radius: 2px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  transform: rotate(-6deg);
+  z-index: 2;
+  animation: postit-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+[data-theme="dark"] .postit {
+  background: #4a4326;
+  color: #f1e9c9;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.postit-tape {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%) rotate(8deg);
+  width: 26px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@keyframes postit-in {
+  from {
+    opacity: 0;
+    transform: rotate(-2deg) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-6deg) translateY(0);
+  }
+}
+
+/* ═══════════════════════════════════════
+   CONTACT — LAYOUT
+   Editorial two columns: primary contact on the left, an availability
+   panel on the right split by a hairline rather than a card.
+   ═══════════════════════════════════════ */
+.contact-block {
+  /* Availability green. The palette is deliberately neutral, so this one
+     accent is scoped here — same approach as --color-navy on the badge. */
+  --contact-status: #4e7a3f;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+[data-theme="dark"] .contact-block {
+  --contact-status: #86a96f;
+}
+
+.contact-main,
+.contact-panel {
+  min-width: 0;
+}
+
+/* Anchors the absolutely positioned .postit to this column, not the block. */
+.contact-main {
+  position: relative;
+}
+
+.contact-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-gray-light);
+  margin: 0 0 14px;
+}
+
+.contact-panel {
+  border-left: 1px solid var(--color-line);
+  padding-left: clamp(24px, 3.5vw, 40px);
+}
+
+.contact-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+}
+
+/* Static 6px disc — deliberately no pulse, so it reads as availability
+   rather than an online/presence indicator. */
+.contact-status-dot {
+  flex: 0 0 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--contact-status);
+}
+
+.contact-panel-title {
+  margin: 0 0 18px;
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.contact-services {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-service {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--color-line);
+}
+
+/* Last item's bottom border doubles as the rule above the location. */
+.contact-service:last-child {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.contact-service-arrow {
+  flex-shrink: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-gray-light);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .contact-service:hover .contact-service-arrow {
+    transform: translateX(3px);
+    color: var(--color-ink);
+  }
+}
+
+.contact-service-body {
+  min-width: 0;
+}
+
+.contact-service-name {
+  margin: 0 0 3px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.contact-service-desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-gray);
+}
+
+.contact-location {
+  margin: 20px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-gray-light);
+}
+
+@media (max-width: 600px) {
+  .postit {
+    position: static;
+    display: inline-block;
+    margin-bottom: 14px;
+    transform: rotate(-3deg);
+  }
+
+  .contact-block {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .contact-panel {
+    padding-left: 0;
+    padding-top: 24px;
+    border-left: none;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .contact-links-row {
+    flex-wrap: wrap;
+  }
 }
 
 /* ═══════════════════════════════════════
@@ -2637,8 +2862,15 @@
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: opacity 0.4s ease;
+  /* Neighbour cards are background context — desaturated until centered.
+     No :hover variant on purpose: clicking a neighbour navigates. */
+  filter: grayscale(100%);
+  transition: opacity 0.4s ease, filter 0.5s ease;
   -webkit-user-drag: none;
+}
+
+.coverflow-item--active .coverflow-thumb img {
+  filter: grayscale(0%);
 }
 
 /* Placeholder panel — shown until the real screenshot exists at
@@ -2850,4 +3082,12 @@
     font-size: 20px;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the placeholder→loaded crossfade; drop only the filter fade. */
+  .coverflow-thumb img {
+    transition: opacity 0.4s ease !important;
+  }
+}
+
 
