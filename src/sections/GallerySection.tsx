@@ -72,10 +72,6 @@ function GallerySection({ photos }: GallerySectionProps) {
                 />
                 <span className="gallery-badge">{String(i + 1).padStart(2, '0')}</span>
               </div>
-              <div className="gallery-caption">
-                <span className="gallery-name">{photo.name}</span>
-                <span className="gallery-year">{photo.year}</span>
-              </div>
             </div>
           ))}
           {photos.map((photo, i) => (
@@ -88,10 +84,6 @@ function GallerySection({ photos }: GallerySectionProps) {
                   loading="lazy"
                 />
                 <span className="gallery-badge">{String(i + 1).padStart(2, '0')}</span>
-              </div>
-              <div className="gallery-caption">
-                <span className="gallery-name">{photo.name}</span>
-                <span className="gallery-year">{photo.year}</span>
               </div>
             </div>
           ))}

@@ -2107,30 +2107,6 @@
   line-height: 1;
 }
 
-.gallery-caption {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-top: 8px;
-  gap: 8px;
-}
-
-.gallery-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-body);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.gallery-year {
-  font-size: 11px;
-  color: var(--color-gray-light);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
 @media (max-width: 820px) {
   .gallery-frame {
     width: 140px;

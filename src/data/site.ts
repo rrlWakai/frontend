@@ -203,16 +203,6 @@ export const projects: Project[] = [
       results: [],
     },
   },
-  {
-    id: 'saling-cafe',
-    name: 'Saling Café',
-    category: 'Business / Café Website',
-    description:
-      'A digital ordering and menu experience for a boutique café, focusing on clear menu presentation and an intuitive ordering flow.',
-    url: 'https://salingcafe.vercel.app/',
-    screenshot: '/screenshots/saling-cafe.png',
-    featured: false,
-  },
 ]
 
 export type Photo = {
@@ -222,14 +212,10 @@ export type Photo = {
 }
 
 export const photos: Photo[] = [
-  { name: 'KRiB Launch', year: '2026', src: 'https://picsum.photos/seed/krib/360/480' },
-  { name: 'Premier Rentals', year: '2026', src: 'https://picsum.photos/seed/premier/360/480' },
-  { name: 'Yuhrum Villas', year: '2025', src: 'https://picsum.photos/seed/yuhrum/360/480' },
-  { name: 'Timeless Resort', year: '2025', src: 'https://picsum.photos/seed/resort/360/480' },
-  { name: 'Saling Café', year: '2025', src: 'https://picsum.photos/seed/cafe/360/480' },
-  { name: 'Campus Project', year: '2024', src: 'https://picsum.photos/seed/campus/360/480' },
-  { name: 'UI Study', year: '2024', src: 'https://picsum.photos/seed/uistudy/360/480' },
-  { name: 'Hackathon', year: '2024', src: 'https://picsum.photos/seed/hackathon/360/480' },
+  { name: 'KRiB Launch', year: '2026', src: '/gall5krib.jpe' },
+  { name: 'Premier Rentals', year: '2026', src: '/gall1.jpe' },
+  { name: 'Yuhrum Villas', year: '2025', src: '/gall2flutter.jpe' },
+  { name: 'Timeless Resort', year: '2025', src: '/gall3.jpe' },
 ]
 
 export type Education = {

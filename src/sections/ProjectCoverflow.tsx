@@ -114,7 +114,13 @@ function ProjectCoverflow({ projects }: { projects: Project[] }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const scrollRaf = useRef(0);
 
-  const activeProject = projects[active];
+  /* Guard against a stale saved index (e.g. a project was removed) so a
+     restored session or preserved HMR state can never point out of range */
+  useEffect(() => {
+    if (active >= count) setActive(0);
+  }, [active, count]);
+
+  const activeProject = projects[active] ?? projects[0];
 
   useEffect(() => {
     try {
