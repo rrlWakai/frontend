@@ -3194,6 +3194,21 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  transition: opacity 0.3s ease;
+}
+
+/* Avatar mirrors the theme toggle: morning.png in light, profile.png in dark.
+   Both photos are stacked and cross-faded so the swap follows data-theme. */
+.chat-launcher-photo--light {
+  opacity: 0;
+}
+
+[data-theme="light"] .chat-launcher-photo--dark {
+  opacity: 0;
+}
+
+[data-theme="light"] .chat-launcher-photo--light {
+  opacity: 1;
 }
 
 .chat-status-dot {

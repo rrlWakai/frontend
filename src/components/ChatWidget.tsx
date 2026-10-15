@@ -375,7 +375,19 @@ function ChatWidget() {
               aria-label="Open the chat assistant — ask me anything"
               aria-haspopup="dialog"
             >
-              <img className="chat-launcher-photo" src="/profile.png" alt="" draggable={false} />
+              {/* Avatar follows the site theme (see .chat-launcher-photo in App.css) */}
+              <img
+                className="chat-launcher-photo chat-launcher-photo--dark"
+                src="/profile.png"
+                alt=""
+                draggable={false}
+              />
+              <img
+                className="chat-launcher-photo chat-launcher-photo--light"
+                src="/morning.png"
+                alt=""
+                draggable={false}
+              />
               <span className="chat-status-dot" aria-hidden="true" />
 
               <span className="chat-badge" aria-hidden="true">
