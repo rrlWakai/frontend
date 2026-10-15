@@ -8,6 +8,7 @@ import GallerySection from "./sections/GallerySection";
 import GitHubActivitySection from "./sections/GitHubActivitySection";
 import ContactSection from "./sections/ContactSection";
 import Footer from "./components/Footer";
+import ChatWidget from "./components/ChatWidget";
 import Reveal from "./components/Reveal";
 import StatsStrip from "./components/StatsStrip";
 import Loader from "./components/Loader";
@@ -133,6 +134,7 @@ function App() {
       </div>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 }
